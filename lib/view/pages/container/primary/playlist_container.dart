@@ -556,7 +556,7 @@ class _PlaylistContainerState extends State<PlaylistContainer> {
                         SliverToBoxAdapter(
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Padding(
@@ -573,15 +573,15 @@ class _PlaylistContainerState extends State<PlaylistContainer> {
                           delegate: StickyHeaderDelegate(
                               child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               _buildSongListHeader(isMediumScreen),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
+                              const Padding(
+                                padding: EdgeInsets.symmetric(
                                   horizontal: 8.0,
                                 ),
-                                child: const Divider(color: primaryTextColor),
+                                child: Divider(color: primaryTextColor),
                               ),
                             ],
                           )),

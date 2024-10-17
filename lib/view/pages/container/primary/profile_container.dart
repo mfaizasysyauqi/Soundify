@@ -50,6 +50,8 @@ class _ProfileContainerState extends State<ProfileContainer> {
   bool _isHavePlaylist = false;
   bool _isLoading = false; // tambahkan variabel loading
 
+  bool _isFollow = false;
+
   void onSongClicked() {
     setState(() {
       _isSongClicked = true;
@@ -79,6 +81,35 @@ class _ProfileContainerState extends State<ProfileContainer> {
     super.initState();
     _loadInitialData();
     loadUserData();
+    _checkIfFollow();
+  }
+
+  Future<void> _checkIfFollow() async {
+    String userId = currentUser!.uid;
+
+    // Reference to the user being followed
+    DocumentSnapshot userToFollowSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .get();
+
+    // Reference to the current user who is following or unfollowing
+    DocumentSnapshot currentUserSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+    if (userToFollowSnapshot.exists && currentUserSnapshot.exists) {
+      var followersData = userToFollowSnapshot.data() as Map<String, dynamic>;
+      var followingData = currentUserSnapshot.data() as Map<String, dynamic>;
+
+      List<dynamic> followers = followersData['followers'] ?? [];
+      List<dynamic> following = followingData['following'] ?? [];
+
+      if (!mounted) return;
+      setState(() {
+        _isFollow =
+            followers.contains(userId) && following.contains(widget.userId);
+      });
+    }
   }
 
   Future<void> loadUserData() async {
@@ -1117,13 +1148,23 @@ class _ProfileContainerState extends State<ProfileContainer> {
               Positioned(
                 bottom: 7,
                 right: 7,
-                child: CircleAvatar(
-                  radius: 15,
-                  backgroundColor: tertiaryTextColor,
-                  child: Icon(
-                    Icons.add,
-                    color: primaryTextColor,
-                    size: 25,
+                child: GestureDetector(
+                  onTap: () {
+                    if (!mounted) return;
+                    setState(() {
+                      _isFollow = !_isFollow; // Toggle the value of _isLiked
+                      _onFollowChanged(_isFollow); // Update Firestore
+                    });
+                  },
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundColor:
+                        _isFollow ? quinaryColor : tertiaryTextColor,
+                    child: Icon(
+                      _isFollow ? Icons.star : Icons.star_border,
+                      color: primaryTextColor,
+                      size: 20,
+                    ),
                   ),
                 ),
               )
@@ -1500,6 +1541,43 @@ class _ProfileContainerState extends State<ProfileContainer> {
       );
     } else {
       return const SizedBox.shrink();
+    }
+  }
+
+// Update follow status in Firestore based on whether the user is following or not
+  void _onFollowChanged(bool isFollow) async {
+    String userId = currentUser!.uid;
+
+    // Reference to the user being followed
+    DocumentReference userToFollowDocRef =
+        FirebaseFirestore.instance.collection('users').doc(widget.userId);
+
+    // Reference to the current user who is following or unfollowing
+    DocumentReference currentUserDocRef =
+        FirebaseFirestore.instance.collection('users').doc(userId);
+
+    try {
+      if (isFollow) {
+        // Add current userId to the 'followers' array of the user being followed
+        await userToFollowDocRef.update({
+          'followers': FieldValue.arrayUnion([userId]),
+        });
+        // Add followed userId to the 'following' array of the current user
+        await currentUserDocRef.update({
+          'following': FieldValue.arrayUnion([widget.userId]),
+        });
+      } else {
+        // Remove current userId from the 'followers' array of the user being followed
+        await userToFollowDocRef.update({
+          'followers': FieldValue.arrayRemove([userId]),
+        });
+        // Remove followed userId from the 'following' array of the current user
+        await currentUserDocRef.update({
+          'following': FieldValue.arrayRemove([widget.userId]),
+        });
+      }
+    } catch (e) {
+      print('Error updating follow status: $e');
     }
   }
 }

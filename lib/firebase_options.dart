@@ -53,12 +53,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCnkPvok5HFcDrF8sb-VDMTkfGvMVVgkrQ',
-    appId: '1:1024616837661:web:fb9969fdc57e6b2d298cf4',
-    messagingSenderId: '1024616837661',
-    projectId: 'soundify-a7386',
-    authDomain: 'soundify-a7386.firebaseapp.com',
-    storageBucket: 'soundify-a7386.appspot.com',
+    apiKey: 'AIzaSyDQnj7xzwqPwQf-sWfBbei03SHjwRikapg',
+    appId: '1:42175155045:web:0b27fde80f81af23aaaf8c',
+    messagingSenderId: '42175155045',
+    projectId: 'soundify-b4c30',
+    authDomain: 'soundify-b4c30.firebaseapp.com',
+    storageBucket: 'soundify-b4c30.appspot.com',
   );
 
 }

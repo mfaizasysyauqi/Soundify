@@ -77,7 +77,9 @@ class _ShowDetailSongState extends State<ShowDetailSong> {
                           child: Text(
                             songProvider.artistName,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(color: primaryTextColor),
+                            style: const TextStyle(
+                                color: quaternaryTextColor,
+                                fontSize: microFontSize),
                           ),
                         ),
                       ],
@@ -243,7 +245,8 @@ class _ShowDetailSongState extends State<ShowDetailSong> {
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                              color: primaryTextColor,
+                                              color: quaternaryTextColor,
+                                              fontSize: microFontSize,
                                             ),
                                           ),
                                         )

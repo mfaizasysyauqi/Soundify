@@ -107,18 +107,18 @@ class _PlayListState extends State<PlayList> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const Text(
+                            return Text(
                               '',
                               style: TextStyle(
-                                color: primaryTextColor,
+                                color: quaternaryTextColor,
                                 fontSize: microFontSize,
                               ),
                             );
                           } else if (snapshot.hasError) {
-                            return const Text(
+                            return Text(
                               'Error',
                               style: TextStyle(
-                                color: primaryTextColor,
+                                color: quaternaryTextColor,
                                 fontSize: microFontSize,
                               ),
                             );
@@ -136,16 +136,16 @@ class _PlayListState extends State<PlayList> {
                             return Text(
                               userName ?? 'Unknown',
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: primaryTextColor,
+                              style: TextStyle(
+                                color: quaternaryTextColor,
                                 fontSize: microFontSize,
                               ),
                             );
                           } else {
-                            return const Text(
+                            return Text(
                               'Unknown',
                               style: TextStyle(
-                                color: primaryTextColor,
+                                color: quaternaryTextColor,
                                 fontSize: microFontSize,
                               ),
                             );

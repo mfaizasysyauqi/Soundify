@@ -1432,8 +1432,9 @@ class _SongListItemState extends State<SongListItem> {
                             text: TextSpan(
                               text: widget.artistName,
                               style: const TextStyle(
-                                color: primaryTextColor,
+                                color: quaternaryTextColor,
                                 fontWeight: mediumWeight,
+                                fontSize: microFontSize,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
@@ -1452,7 +1453,9 @@ class _SongListItemState extends State<SongListItem> {
                 ],
               ),
               screenWidth > 1280 ? const Spacer() : const SizedBox.shrink(),
-              screenWidth > 1280 ? const SizedBox(width: 5) : const SizedBox.shrink(),
+              screenWidth > 1280
+                  ? const SizedBox(width: 5)
+                  : const SizedBox.shrink(),
               screenWidth > 1280
                   ? SizedBox(
                       width: screenWidth * 0.125,
@@ -1482,7 +1485,9 @@ class _SongListItemState extends State<SongListItem> {
                   // ? const SizedBox(width: 30)
                   const Spacer()
                   : const SizedBox.shrink(),
-              screenWidth > 1380 ? const SizedBox(width: 5) : const SizedBox.shrink(),
+              screenWidth > 1380
+                  ? const SizedBox(width: 5)
+                  : const SizedBox.shrink(),
               screenWidth > 1380
                   ? SizedBox(
                       width: 82,

@@ -215,7 +215,7 @@ class _BottomContainerState extends State<BottomContainer> {
         Text(
           songProvider.artistName,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(color: primaryTextColor, fontSize: 12),
+          style: const TextStyle(color: quaternaryTextColor, fontSize: microFontSize),
         ),
       ],
     );
